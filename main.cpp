@@ -10,17 +10,17 @@
 #define TFT_CS  D6
 #define TFT_RST D3
 
-const char* ssid = "iPhone";  //replace your wifi name
-const char* password = "12345678";  //replace your wifi password
-const char* api_key = "replace your open weather API"; //replace your open weather API
-String api_url = "http://api.openweathermap.org/data/2.5/weather?q=Sydney&appid=" + String(api_key);  // I set city as sydney here 
+const char* ssid = "iPhone";
+const char* password = "12345678";
+const char* api_key = "ed94c71e2aa77121a9923c531bc3d7eb";
+String api_url = "http://api.openweathermap.org/data/2.5/weather?q=Sydney&appid=" + String(api_key);
 
 BH1750 lightMeter;
 Servo myservo;
 DFRobot_ST7789_240x320_HW_SPI screen(TFT_DC, TFT_CS, TFT_RST);
 
 unsigned long lastApiCallTime = 0;
-unsigned long lastLuxUpdateTime = 0;  
+unsigned long lastLuxUpdateTime = 0;  // 用于lux更新的时间变量
 
 void setup() {
   Serial.begin(9600);
@@ -52,7 +52,19 @@ void loop() {
     lastLuxUpdateTime = currentMillis;
 
     uint16_t lux = lightMeter.readLightLevel();
-    // update Lux
+
+    // 控制舵机角度
+    if (lux < 50) {
+      myservo.write(0);
+    } else if (lux < 200) {
+      myservo.write(45);
+    } else if (lux < 1000) {
+      myservo.write(90);
+    } else {
+      myservo.write(135);
+    }
+
+    // 更新光强值
     screen.fillRect(16, 51, screen.width() - 32, 35, COLOR_RGB565_WHITE);
     screen.setCursor(16, 51);
     screen.print(lux);
@@ -90,6 +102,9 @@ void loop() {
         screen.print("Humidity: ");
         screen.print(humidity);
         screen.print("%");
+
+        screen.setCursor(16, 191);
+        screen.print("City: Sydney");
       }
 
       http.end();
