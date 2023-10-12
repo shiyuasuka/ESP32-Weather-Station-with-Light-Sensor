@@ -43,3 +43,42 @@ Once uploaded, the device will automatically connect to the WiFi network and sta
 
 The servo will adjust its angle according to the light level.
 
+## for MQTT server
+the library should be 
+lib_deps = 
+	ESP32Servo
+	DFRobot_GDL
+	claws/BH1750@^1.3.0
+	BH1750
+	ArduinoJson
+	SD
+	FS
+	ESPAsyncWebServer
+	me-no-dev/AsyncTCP@^1.1.1
+	ottowinter/ESPAsyncWebServer-esphome@^3.1.0
+	256dpi/MQTT@^2.5.1
+
+ ## for API server 
+ the library should be 
+ lib_deps = 
+	ESP32Servo
+	DFRobot_GDL
+	claws/BH1750@^1.3.0
+	BH1750
+	ArduinoJson
+	SD
+	FS
+	ESPAsyncWebServer
+	me-no-dev/AsyncTCP@^1.1.1
+	ottowinter/ESPAsyncWebServer-esphome@^3.1.0
+
+## for main branch
+the library should be 
+lib_deps = 
+	ESP32Servo
+	DFRobot_GDL
+	claws/BH1750@^1.3.0
+	BH1750
+    ArduinoJson
+    SD
+    FS
